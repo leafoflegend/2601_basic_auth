@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 
-const hash = (input, salt = '') => {
+type Hash = (input: string, salt: string) => string;
+const hash: Hash = (input, salt = '') => {
     console.log('Hash Input: ', chalk.cyan(input));
     if (typeof input !== 'string') {
         throw new Error(`Can only hash strings!`);

@@ -1,5 +1,6 @@
 import express from 'express';
 import chalk from 'chalk';
+import cookieParser from 'cookie-parser';
 import hash from './hash.js';
 
 const PORT = 3000;
@@ -7,14 +8,24 @@ const SALT = process.env.SALT || 'salt_default';
 
 const app = express();
 
-const DB = {};
-const loggedInUsers = {};
+interface FakeDatabase {
+    [username: string]: string;
+}
+const DB: FakeDatabase = {};
+
+interface LoggedInUsers {
+    [userKey: string]: string;
+}
+const loggedInUsers: LoggedInUsers = {};
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
-    if (req.headers.authorization) {
-        const key = req.headers.authorization.slice(7);
+    console.log('Cookies: ', req.cookies);
+
+    if (req.cookies.user_key) {
+        const key = req.cookies.user_key as string;
 
         if (loggedInUsers[key]) {
             req.user = loggedInUsers[key];
@@ -50,8 +61,12 @@ app.post('/login', (req, res, next) => {
         // User Session
         loggedInUsers[key] = username;
 
+        res.cookie('user_key', key, {
+            expires: new Date(Date.now() + 24 * 3600000),
+            sameSite: 'none',
+            secure: true,
+        });
         res.status(200).send({
-            key,
             message: `${username} is now logged in!`,
         });
     } else {
