@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node dist/main.js",
-    "compile": "tsc"
+    "compile": "tsc",
+    "compile:watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
