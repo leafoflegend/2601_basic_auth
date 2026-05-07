@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/main.js",
+    "seed": "node dist/seed.js",
     "compile": "tsc",
     "compile:watch": "tsc --watch"
   },
@@ -13,13 +14,20 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "chalk": "^5.6.2",
     "cookie-parser": "^1.4.7",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "redis": "^5.12.1",
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
+    "@types/pg": "^8.20.0",
     "typescript": "^6.0.3"
   }
 }
